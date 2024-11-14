@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function CardLeftInf() {
   return (
-    <div className="">
+    <div>
       <h1 className="font-roboto font-bold text-white text-[54px] leading-none">Чіп Чендж</h1>
       <p className="font-roboto font-medium text-gray-light text-[20px] leading-none mt-[25px]">Обмінник валют - навчальний</p>
       <Link
