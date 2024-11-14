@@ -4,7 +4,7 @@ import Header from "./Components/Layout/Header/Header.js";
 import Card from "./Components/Layout/Card/Card.js";
 import Footer from "./Components/Layout/Footer/Footer.js";
 import "./App.css";
-import './Fonts/Fonts.css'; 
+import "./Fonts/Fonts.css";
 
 function App() {
   return (
@@ -12,10 +12,11 @@ function App() {
       <Router>
         <Header />
         <Card />
-        <RouterComponent />
+        <main className="flex justify-center">
+          <RouterComponent />
+        </main>
+        <Footer />
       </Router>
-
-      <Footer />
     </div>
   );
 }

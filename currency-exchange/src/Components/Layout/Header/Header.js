@@ -4,10 +4,9 @@ import Cabinet from "./HeaderComponents/Cabinet.js";
 
 function Header() {
   return (
-    // header
-    <div className="bg-custom-light-blue">
+    <div>
       {/* app header */}
-      <header className="flex justify-center">
+      <header className="flex justify-center bg-custom-light-blue">
         {/* app container */}
         <div className="container">
           {/* headerwrapper */}

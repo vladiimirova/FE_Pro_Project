@@ -20,6 +20,10 @@ module.exports = {
       backgroundImage: {
         'custom-bg': "url('/public/img/bg.png')",
       },
+
+      lineHeight: {
+        '140': '1.4', // 140% высоты строки
+      },
     },
   },
   plugins: [],
