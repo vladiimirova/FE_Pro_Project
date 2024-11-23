@@ -10,7 +10,7 @@ module.exports = {
         'black':  '#1F1E25',     
         'gray': '#707C87',
         'hover': '#2C36F2',
-        'white': '#F6F7FF',
+        'white': '#FFFFFF',
         'gray-light': '#E0E1EA',
       },
       fontFamily: {

@@ -1,23 +1,44 @@
-import RouterComponent from "./Components/Router/RouterComponent.js";
-import { BrowserRouter as Router } from "react-router-dom";
-import Header from "./Components/Layout/Header/Header.js";
-import Card from "./Components/Layout/Card/Card.js";
-import Footer from "./Components/Layout/Footer/Footer.js";
+import RouterComponent from "./components/Router/RouterComponent.js";
+import { BrowserRouter as Router, useLocation } from "react-router-dom"; 
+import Header from "./components/Layout/Header/Header.js";
+import Card from "./components/Layout/Card/Card.js";
+import Footer from "./components/Layout/Footer/Footer.js";
 import "./App.css";
 import "./Fonts/Fonts.css";
 
-function App() {
+const validPaths = [
+  "/",
+  "/converter",
+  "/services",
+  "/contacts",
+  "/questions",
+  "/cabinet"
+];
+
+function AppContent() {
+  const location = useLocation(); 
+
+  const isNotFoundPage = !validPaths.includes(location.pathname);
+
   return (
     <div className="App">
-      <Router>
-        <Header />
-        <Card />
-        <main className="flex justify-center">
-          <RouterComponent />
-        </main>
-        <Footer />
-      </Router>
+      {!isNotFoundPage && <Header />}
+      {!isNotFoundPage && <Card />}
+
+      <main>
+        <RouterComponent />
+      </main>
+
+      {!isNotFoundPage && <Footer />}
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Router> 
+      <AppContent />
+    </Router>
   );
 }
 
