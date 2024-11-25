@@ -1,5 +1,5 @@
-import React from "react";
-import Btn from "../../../TempBtn/Btn.js";
+import React from 'react';
+import Btn from '../../../TempBtn/Btn.js';
 
 function MainLeftInf() {
   return (
@@ -13,9 +13,11 @@ function MainLeftInf() {
       </p>
 
       <Btn
-        className={"text-custom-light-blue bg-[#2C36F2] hover:bg-[#1E90FF] w-[251px] h-[60px]"}
-        to={"/converter"}
-        text={"Конвертувати валюту"}
+        className={
+          'text-custom-light-blue bg-[#2C36F2] hover:bg-[#1E90FF] w-[251px] h-[60px]'
+        }
+        to={'/converter'}
+        text={'Конвертувати валюту'}
       />
     </div>
   );

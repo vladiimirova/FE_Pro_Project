@@ -1,9 +1,5 @@
 function ConverterHistory() {
-  return (
-   <div>
-    
-   </div>
-  );
+  return <div></div>;
 }
 
 export default ConverterHistory;

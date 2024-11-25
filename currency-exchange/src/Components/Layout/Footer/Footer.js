@@ -1,8 +1,8 @@
-import AdressCol from "./FooterElements/AdressCol.js";
-import InfCol from "./FooterElements/InfCol.js";
-import SupportCol from "./FooterElements/SupportCol.js";
-import TelCol from "./FooterElements/TelCol.js";
-import AppCol from "./FooterElements/AppCol.js";
+import AdressCol from './FooterElements/AdressCol.js';
+import InfCol from './FooterElements/InfCol.js';
+import SupportCol from './FooterElements/SupportCol.js';
+import TelCol from './FooterElements/TelCol.js';
+import AppCol from './FooterElements/AppCol.js';
 
 function Footer() {
   return (

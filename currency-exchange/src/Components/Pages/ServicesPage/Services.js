@@ -1,12 +1,12 @@
-import ServiceTitle from "./ServicesComp/ServicesTitle.js"
-import ServicesSection from "./ServicesComp/ServicesSection.js"
+import ServiceTitle from './ServicesComp/ServicesTitle.js';
+import ServicesSection from './ServicesComp/ServicesSection.js';
 
 function Services() {
   return (
     <div>
-        <ServiceTitle />
-        <ServicesSection />
-      </div>
+      <ServiceTitle />
+      <ServicesSection />
+    </div>
   );
 }
 

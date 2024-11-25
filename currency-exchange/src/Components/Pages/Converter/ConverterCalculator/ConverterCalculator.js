@@ -1,24 +1,24 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import CurrencyInput from "./FormComp/CurrencyInput.js";
-import DateInput from "./FormComp/DateInput.js";
-import Btn from "../../../TempBtn/Btn.js";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import CurrencyInput from './FormComp/CurrencyInput.js';
+import DateInput from './FormComp/DateInput.js';
+import Btn from '../../../TempBtn/Btn.js';
 
 const schemaConverter = z.object({
   haveMoney: z
     .string()
     .nonempty("Це поле обов'язкове")
-    .regex(/^\d+(\.\d{1,2})?$/, "Введіть дійсне числове значення"),
-  currency: z.enum(["UAH", "USD", "EUR", "GBP"], {
-    errorMap: () => ({ message: "Виберіть валюту" }),
+    .regex(/^\d+(\.\d{1,2})?$/, 'Введіть дійсне числове значення'),
+  currency: z.enum(['UAH', 'USD', 'EUR', 'GBP'], {
+    errorMap: () => ({ message: 'Виберіть валюту' }),
   }),
   date: z
     .string()
-    .nonempty("Оберіть дату")
+    .nonempty('Оберіть дату')
     .refine((date) => !isNaN(Date.parse(date)), {
-      message: "Неправильний формат дати",
+      message: 'Неправильний формат дати',
     }),
 });
 
@@ -32,8 +32,8 @@ function ConverterCalculator() {
   });
 
   const onSubmit = (data) => {
-    console.log("Форма отправлена:", data);
-    alert("Валюта конвертована!");
+    console.log('Форма отправлена:', data);
+    alert('Валюта конвертована!');
   };
 
   return (
@@ -53,7 +53,7 @@ function ConverterCalculator() {
                 label="В мене є:"
                 register={register}
                 error={errors.haveMoney}
-                currencies={["UAH", "USD", "EUR", "GBP"]}
+                currencies={['UAH', 'USD', 'EUR', 'GBP']}
               />
 
               <DateInput id="date" register={register} error={errors.date} />
@@ -65,15 +65,15 @@ function ConverterCalculator() {
                 label="Хочу придбати:"
                 register={register}
                 error={errors.haveMoney}
-                currencies={["USD", "UAH", "EUR", "GBP"]}
+                currencies={['USD', 'UAH', 'EUR', 'GBP']}
               />
 
               <div className="flex justify-end">
                 <Btn
                   className={
-                    "text-custom-light-blue bg-[#2C36F2] hover:bg-[#1E90FF] w-[220px] h-[60px]"
+                    'text-custom-light-blue bg-[#2C36F2] hover:bg-[#1E90FF] w-[220px] h-[60px]'
                   }
-                  text={"Зберегти результат"}
+                  text={'Зберегти результат'}
                 />
               </div>
             </div>
@@ -85,4 +85,3 @@ function ConverterCalculator() {
 }
 
 export default ConverterCalculator;
-

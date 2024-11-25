@@ -1,5 +1,5 @@
-import CardLeftInf from "./CardElements/CardLeftInf.js";
-import CardImg from "./CardElements/CardImg.js";
+import CardLeftInf from './CardElements/CardLeftInf.js';
+import CardImg from './CardElements/CardImg.js';
 
 function Card() {
   return (

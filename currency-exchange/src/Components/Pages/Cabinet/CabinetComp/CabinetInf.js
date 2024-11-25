@@ -15,11 +15,11 @@ function CabinetInf() {
                 <strong className="font-medium">Ім'я:</strong> Іван Іваненко
               </p>
               <p className="mb-2">
-                <strong className="font-medium">Email:</strong>{" "}
+                <strong className="font-medium">Email:</strong>{' '}
                 ivan.ivanenko@example.com
               </p>
               <p className="mb-2">
-                <strong className="font-medium">Дата реєстрації:</strong>{" "}
+                <strong className="font-medium">Дата реєстрації:</strong>{' '}
                 01.01.2024
               </p>
             </div>

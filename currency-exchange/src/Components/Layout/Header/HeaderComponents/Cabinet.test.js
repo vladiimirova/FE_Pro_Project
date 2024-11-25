@@ -1,12 +1,12 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Cabinet from './Cabinet'; 
+import Cabinet from './Cabinet';
 
 describe('Cabinet component', () => {
   test('Отображает иконку и текст', () => {
     const { getByText, getByAltText } = render(
-      <Router> 
+      <Router>
         <Cabinet />
       </Router>
     );
@@ -24,7 +24,7 @@ describe('Cabinet component', () => {
         <Cabinet />
       </Router>
     );
-    
+
     const link = getByRole('link');
     expect(link).toHaveAttribute('href', '/cabinet');
   });

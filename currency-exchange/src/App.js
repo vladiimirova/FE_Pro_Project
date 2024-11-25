@@ -1,22 +1,22 @@
-import RouterComponent from "./components/Router/RouterComponent.js";
-import { BrowserRouter as Router, useLocation } from "react-router-dom"; 
-import Header from "./components/Layout/Header/Header.js";
-import Card from "./components/Layout/Card/Card.js";
-import Footer from "./components/Layout/Footer/Footer.js";
-import "./App.css";
-import "./Fonts/Fonts.css";
+import RouterComponent from './components/Router/RouterComponent.js';
+import { BrowserRouter as Router, useLocation } from 'react-router-dom';
+import Header from './components/Layout/Header/Header.js';
+import Card from './components/Layout/Card/Card.js';
+import Footer from './components/Layout/Footer/Footer.js';
+import './App.css';
+import './Fonts/Fonts.css';
 
 const validPaths = [
-  "/",
-  "/converter",
-  "/services",
-  "/contacts",
-  "/questions",
-  "/cabinet"
+  '/',
+  '/converter',
+  '/services',
+  '/contacts',
+  '/questions',
+  '/cabinet',
 ];
 
 function AppContent() {
-  const location = useLocation(); 
+  const location = useLocation();
 
   const isNotFoundPage = !validPaths.includes(location.pathname);
 
@@ -36,7 +36,7 @@ function AppContent() {
 
 function App() {
   return (
-    <Router> 
+    <Router>
       <AppContent />
     </Router>
   );

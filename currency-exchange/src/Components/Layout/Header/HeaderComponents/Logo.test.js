@@ -5,7 +5,7 @@ import Logo from './Logo';
 
 test('Отображает логотип и текст', () => {
   render(
-    <Router> 
+    <Router>
       <Logo />
     </Router>
   );

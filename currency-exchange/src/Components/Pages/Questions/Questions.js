@@ -1,5 +1,5 @@
-import QuestionsForm from "./QuestionsComp/QuestionsForm.js";
-import QuestionsTitle from "./QuestionsComp/QuestionsTitle.js"
+import QuestionsForm from './QuestionsComp/QuestionsForm.js';
+import QuestionsTitle from './QuestionsComp/QuestionsTitle.js';
 
 function Questions() {
   return (

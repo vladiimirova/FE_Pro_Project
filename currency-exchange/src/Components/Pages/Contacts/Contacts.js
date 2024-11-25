@@ -1,5 +1,5 @@
-import ContactsTitle from "./ContactsComp/ContactsTitle.js";
-import ContactsInf from "./ContactsComp/ContactsInf.js";
+import ContactsTitle from './ContactsComp/ContactsTitle.js';
+import ContactsInf from './ContactsComp/ContactsInf.js';
 
 function Contacts() {
   return (

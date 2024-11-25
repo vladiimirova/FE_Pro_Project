@@ -1,6 +1,6 @@
-import Logo from "./HeaderComponents/Logo.js";
-import Nav from "./HeaderComponents/Nav.js";
-import Cabinet from "./HeaderComponents/Cabinet.js";
+import Logo from './HeaderComponents/Logo.js';
+import Nav from './HeaderComponents/Nav.js';
+import Cabinet from './HeaderComponents/Cabinet.js';
 
 function Header() {
   return (

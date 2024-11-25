@@ -1,7 +1,7 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 // Схема валидации с использованием Zod
 const schema = z.object({
@@ -9,8 +9,8 @@ const schema = z.object({
     .string()
     .min(2, "Ім'я має бути не менше 2 символів")
     .max(50, "Ім'я занадто довге"),
-  email: z.string().email("Невірний формат email"),
-  question: z.string().min(10, "Питання має бути не менше 10 символів"),
+  email: z.string().email('Невірний формат email'),
+  question: z.string().min(10, 'Питання має бути не менше 10 символів'),
 });
 
 function QuestionsForm() {
@@ -25,8 +25,8 @@ function QuestionsForm() {
 
   // Функция обработки отправки формы
   const onSubmit = (data) => {
-    console.log("Форма отправлена:", data);
-    alert("Ваше питання було успішно надіслано!");
+    console.log('Форма отправлена:', data);
+    alert('Ваше питання було успішно надіслано!');
   };
 
   return (
@@ -50,11 +50,11 @@ function QuestionsForm() {
                   id="name"
                   type="text"
                   placeholder="Введіть ваше ім'я"
-                  {...register("name")}
+                  {...register('name')}
                   className={`w-full p-3 border ${
-                    errors.name ? "border-red-500" : "border-gray-300"
+                    errors.name ? 'border-red-500' : 'border-gray-300'
                   } rounded-md focus:outline-none focus:ring-2 ${
-                    errors.name ? "focus:ring-red-400" : "focus:ring-blue-400"
+                    errors.name ? 'focus:ring-red-400' : 'focus:ring-blue-400'
                   }`}
                 />
                 {errors.name && (
@@ -76,11 +76,11 @@ function QuestionsForm() {
                   id="email"
                   type="email"
                   placeholder="Введіть ваш email"
-                  {...register("email")}
+                  {...register('email')}
                   className={`w-full p-3 border ${
-                    errors.email ? "border-red-500" : "border-gray-300"
+                    errors.email ? 'border-red-500' : 'border-gray-300'
                   } rounded-md focus:outline-none focus:ring-2 ${
-                    errors.email ? "focus:ring-red-400" : "focus:ring-blue-400"
+                    errors.email ? 'focus:ring-red-400' : 'focus:ring-blue-400'
                   }`}
                 />
                 {errors.email && (
@@ -102,13 +102,13 @@ function QuestionsForm() {
                   id="question"
                   placeholder="Напишіть ваше питання"
                   rows="5"
-                  {...register("question")}
+                  {...register('question')}
                   className={`w-full p-3 border ${
-                    errors.question ? "border-red-500" : "border-gray-300"
+                    errors.question ? 'border-red-500' : 'border-gray-300'
                   } rounded-md focus:outline-none focus:ring-2 ${
                     errors.question
-                      ? "focus:ring-red-400"
-                      : "focus:ring-blue-400"
+                      ? 'focus:ring-red-400'
+                      : 'focus:ring-blue-400'
                   }`}
                 ></textarea>
                 {errors.question && (

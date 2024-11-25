@@ -1,5 +1,5 @@
-import React from "react";
-import Btn from "../../../TempBtn/Btn.js";
+import React from 'react';
+import Btn from '../../../TempBtn/Btn.js';
 
 function CardLeftInf() {
   return (
@@ -12,9 +12,9 @@ function CardLeftInf() {
       </p>
 
       <Btn
-        className={"text-gray bg-[#F6F7FF] hover:text-hover"}
-        to={"/converter"}
-        text={"Конвертер валют"}
+        className={'text-gray bg-[#F6F7FF] hover:text-hover'}
+        to={'/converter'}
+        text={'Конвертер валют'}
       />
     </div>
   );

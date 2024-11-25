@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 function CurrencyInput({ id, label, register, error, currencies }) {
   return (
@@ -16,22 +16,20 @@ function CurrencyInput({ id, label, register, error, currencies }) {
           placeholder="Введіть сумму грошей"
           {...register(`${id}`)}
           className={`w-[220px] h-[60px] border-[1px] border-solid ${
-            error ? "border-red-500" : "border-gray-300"
+            error ? 'border-red-500' : 'border-gray-300'
           } text-[20px] font-roboto text-gray font-medium rounded-[4px] focus:outline-none focus:ring-2 ${
-            error ? "focus:ring-red-400" : "focus:ring-blue-400"
+            error ? 'focus:ring-red-400' : 'focus:ring-blue-400'
           } text-center`}
         />
-        {error && (
-          <p className="text-red-500 text-sm mt-1">{error.message}</p>
-        )}
+        {error && <p className="text-red-500 text-sm mt-1">{error.message}</p>}
 
         <div className="relative ml-[15px] w-[120px]">
           <select
-            {...register("currency")}
+            {...register('currency')}
             className={`w-full pl-[18px] h-[60px] border-[1px] border-solid ${
-              error ? "border-red-500" : "border-gray-300"
+              error ? 'border-red-500' : 'border-gray-300'
             } text-[20px] font-roboto text-gray font-medium rounded-[4px] focus:outline-none focus:ring-2 ${
-              error ? "focus:ring-red-400" : "focus:ring-blue-400"
+              error ? 'focus:ring-red-400' : 'focus:ring-blue-400'
             } appearance-none`}
           >
             {currencies.map((currency) => (

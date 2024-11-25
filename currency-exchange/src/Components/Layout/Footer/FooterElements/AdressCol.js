@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 function AdressCol() {
   return (
@@ -7,7 +7,7 @@ function AdressCol() {
       <Link to="/" className="flex  items-center gap-[11px]">
         <img src="./icons/logo.svg" className="header-logo" alt="header-logo" />
         <p className="text-black font-work-sans text-[20px] font-bold">
-          {" "}
+          {' '}
           Чіп Чендж
         </p>
       </Link>
