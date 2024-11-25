@@ -13,7 +13,7 @@ function MainLeftInf() {
       </p>
 
       <Btn
-        className={"text-custom-light-blue bg-[#2C36F2] hover:bg-[#1E90FF]"}
+        className={"text-custom-light-blue bg-[#2C36F2] hover:bg-[#1E90FF] w-[251px] h-[60px]"}
         to={"/converter"}
         text={"Конвертувати валюту"}
       />

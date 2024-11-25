@@ -16,7 +16,7 @@ function Btn({ className, to, text, onClick }) {
       onClick={onClickHendler}
       className={twMerge(
         cx(
-          "font-roboto font-medium font-normal text-[16px] rounded-[4px] w-[234px] h-[53px] inline-flex items-center justify-center text-center mt-[29px]"
+          "font-roboto font-medium font-normal text-[18px] rounded-[4px] w-[234px] h-[53px] inline-flex items-center justify-center text-center mt-[29px]"
         ),
         className
       )}
