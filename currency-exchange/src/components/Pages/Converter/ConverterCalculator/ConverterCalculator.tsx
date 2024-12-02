@@ -23,11 +23,21 @@ const schemaConverter = z.object({
     .transform((input) => parseFloat(input))
     .refine((value) => value > 0, 'Значення повинно бути позитивним'),
 
-  date: z
+    date: z
     .string()
     .nonempty('Оберіть дату')
     .refine((date) => !isNaN(Date.parse(date)), {
       message: 'Неправильний формат дати',
+    })
+    .refine((date) => {
+      const selectedDate = new Date(date);
+      const today = new Date();
+      const sevenDaysAgo = new Date(today);
+      sevenDaysAgo.setDate(today.getDate() - 7); // 7 дней назад
+
+      return selectedDate >= sevenDaysAgo && selectedDate <= today;
+    }, {
+      message: 'Дата повинна бути в межах сьогоднішнього дня і 7 днів назад',
     }),
 });
 
@@ -62,7 +72,7 @@ function ConverterCalculator({ addToHistory }: ConverterCalculatorProps) {
     },
   });
 
-  const currencies = ['USD', 'UAH', 'GBP', 'CNY'];
+const currencies = ['USD', 'UAH', 'EUR', 'GBP'];
 
   const [currencyFrom, setCurrencyFrom] = useState('UAH'); // Валюта, из которой конвертируем
   const [currencyTo, setCurrencyTo] = useState('USD'); // Валюта, в которую конвертируем
@@ -78,7 +88,16 @@ const [toError, setToError] = useState<string | null>(null); // Можно за�
 
 
   // Текущий курс валют и история конверсий
-  const [exchangeRate, setExchangeRate] = useState(null);
+  const [exchangeRate, setExchangeRate] = useState<number | null>(null);
+
+  const validateDate = (date: string): boolean => {
+    const selectedDate = new Date(date);
+    const today = new Date();
+    const sevenDaysAgo = new Date(today);
+    sevenDaysAgo.setDate(today.getDate() - 7); // 7 дней назад
+  
+    return selectedDate >= sevenDaysAgo && selectedDate <= today;
+  };
 
   // Функция для получения курса валют
   const fetchExchangeRate = async (
@@ -86,6 +105,11 @@ const [toError, setToError] = useState<string | null>(null); // Можно за�
     toCurrency: string,
     date: string
   ) => {
+    if (!validateDate(date)) {
+      console.error('Дата должна быть в пределах сегодняшнего дня и 7 дней назад');
+      return; // Прерываем выполнение функции, если дата невалидна
+    }
+    
     const formattedDate = format(new Date(date), 'dd.MM.yyyy');
   
     // Формируем уникальный ключ с учетом fromCurrency и toCurrency
@@ -95,7 +119,7 @@ const [toError, setToError] = useState<string | null>(null); // Можно за�
     const cachedData = localStorage.getItem(cacheKey);
     if (cachedData) {
       const parsedData = JSON.parse(cachedData);
-      console.log(`Используем кэшированные данные для ${formattedDate}`);
+      console.log(`Используем кэшированные данные для валюты ${fromCurrency} в ${toCurrency} на ${formattedDate}`);
       setExchangeRate(parsedData.rate);
       return;
     }
@@ -112,30 +136,51 @@ const [toError, setToError] = useState<string | null>(null); // Можно за�
       }
   
       const data = await response.json();
-      const exchangeRateData = data.exchangeRate.find(
-        (rate: { currency: string }) => rate.currency === toCurrency
-      );
+      let rate = null;
   
-      if (exchangeRateData && exchangeRateData.saleRate) {
-        setExchangeRate(exchangeRateData.saleRate);
-  
-        // Сохраняем данные в localStorage
-        localStorage.setItem(
-          cacheKey,
-          JSON.stringify({ rate: exchangeRateData.saleRate })
+      // Если обмен происходит с или на гривну
+      if (fromCurrency === 'UAH' || toCurrency === 'UAH') {
+        const fromRate = data.exchangeRate.find(
+          (rate: { currency: string }) => rate.currency === (fromCurrency === 'UAH' ? toCurrency : fromCurrency)
         );
-        console.log(`Данные для ${formattedDate} сохранены в localStorage.`);
+  
+        if (fromRate?.saleRate) {
+          rate = fromRate.saleRate;
+        } else {
+          console.error('Курс для выбранной валюты не найден.');
+          setExchangeRate(null);
+          return;
+        }
       } else {
-        console.error('Курс не найден для выбранной валюты.');
-        setExchangeRate(null);
+        // Если обе валюты не гривна, то рассчитываем курс через гривну
+        const fromCurrencyRate = data.exchangeRate.find(
+          (rate: { currency: string }) => rate.currency === fromCurrency
+        );
+        const toCurrencyRate = data.exchangeRate.find(
+          (rate: { currency: string }) => rate.currency === toCurrency
+        );
+  
+        if (fromCurrencyRate?.saleRate && toCurrencyRate?.saleRate) {
+          rate = toCurrencyRate.saleRate / fromCurrencyRate.saleRate;
+        } else {
+          console.error('Не удалось найти курсы для одной из валют.');
+          setExchangeRate(null);
+          return;
+        }
       }
+  
+      // Устанавливаем найденный курс
+      setExchangeRate(rate);
+  
+      // Сохраняем курс в localStorage
+      localStorage.setItem(cacheKey, JSON.stringify({ rate }));
+      console.log(`Данные для ${formattedDate} сохранены в localStorage.`);
     } catch (error) {
       console.error('Ошибка при запросе курса валют:', error);
       setExchangeRate(null);
     }
   };
   
-
   const isCacheValid = (date: string): boolean => {
     const lastFetchedDate = localStorage.getItem('lastFetchedDate');
     if (!lastFetchedDate) return false;
@@ -184,16 +229,6 @@ useEffect(() => {
     keysToRemove.forEach((key) => localStorage.removeItem(key));
     console.log('Старые данные очищены:', keysToRemove);
   };
-  
-
-  useEffect(() => {
-    if (exchangeRate && fromValue) {
-      const convertedToValue = (parseFloat(fromValue) * exchangeRate).toFixed(
-        2
-      );
-      setToValue(convertedToValue || '');
-    }
-  }, [exchangeRate]);
 
   // Обработчик изменения валюты и суммы
   const handleCurrencyFromChange = (e: {
@@ -239,10 +274,24 @@ useEffect(() => {
   
     // Если валидный ввод и есть курс, пересчитываем
     if (exchangeRate && inputValue.trim() !== '') {
-      const convertedValue = (parseFloat(inputValue) / exchangeRate).toFixed(2);
-      setToValue(convertedValue);
+      const parsedValue = parseFloat(inputValue);
+  
+      // Логика направления конверсии
+      let convertedValue: string;
+      if (currencyFrom === 'UAH') {
+        // Гривна -> другая валюта: деление
+        convertedValue = (parsedValue / exchangeRate).toFixed(2);
+      } else if (currencyTo === 'UAH') {
+        // Другая валюта -> гривна: умножение
+        convertedValue = (parsedValue * exchangeRate).toFixed(2);
+      } else {
+        // Валюта -> Валюта: пересчет через гривну
+        convertedValue = (parsedValue / exchangeRate).toFixed(2);
+      }
+  
+      setToValue(convertedValue); // Устанавливаем значение назначения
     } else {
-      setToValue('');
+      setToValue(''); // Если ввода нет или курс не задан
     }
   };
   
@@ -265,12 +314,27 @@ useEffect(() => {
   
     // Если валидный ввод и есть курс, пересчитываем
     if (exchangeRate && inputValue.trim() !== '') {
-      const convertedValue = (parseFloat(inputValue) * exchangeRate).toFixed(2);
-      setFromValue(convertedValue);
+      const parsedValue = parseFloat(inputValue);
+  
+      // Логика направления конверсии
+      let convertedValue: string;
+      if (currencyFrom === 'UAH') {
+        // Гривна -> другая валюта: умножение
+        convertedValue = (parsedValue * exchangeRate).toFixed(2);
+      } else if (currencyTo === 'UAH') {
+        // Другая валюта -> гривна: деление
+        convertedValue = (parsedValue / exchangeRate).toFixed(2);
+      } else {
+        // Валюта -> Валюта: пересчет через гривну
+        convertedValue = (parsedValue * exchangeRate).toFixed(2);
+      }
+  
+      setFromValue(convertedValue); // Устанавливаем значение источника
     } else {
-      setFromValue('');
+      setFromValue(''); // Если ввода нет или курс не задан
     }
   };
+  
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDate = e.target.value;

@@ -8,10 +8,9 @@ interface CurrencyInputProps {
   currencyValue: string;
   placeholder: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onChangeCurrency?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  value?: string; // Add value to the interface to accept it as a prop
+  onChangeCurrency?: (e: React.ChangeEvent<HTMLSelectElement>) => void; // Update type here to reflect select change
+  value?: string;
 }
-
 
 function CurrencyInput({
   id,
@@ -24,7 +23,7 @@ function CurrencyInput({
   placeholder,
   onChange,
   onChangeCurrency,
-  value, // Destructure the value prop
+  value,
 }: CurrencyInputProps) {
   return (
     <div>
@@ -46,7 +45,7 @@ function CurrencyInput({
             } text-[20px] font-roboto text-gray font-medium rounded-[4px] focus:outline-none focus:ring-2 ${
               error?.[id] ? "focus:ring-red-400" : "focus:ring-blue-400"
             } text-center`}
-            onChange={onChange} 
+            onChange={onChange}
             value={value}
           />
           {/* Error message */}
@@ -58,11 +57,13 @@ function CurrencyInput({
         <div className="relative ml-[15px] w-[120px]">
           <select
             {...register(currencyId)}
+            value={currencyValue}  // Set value here to bind to currencyValue
             className={`w-full pl-[18px] h-[60px] border-[1px] border-solid ${
               error?.[currencyId] ? "border-red-500" : "border-gray-300"
             } text-[20px] font-roboto text-gray font-medium rounded-[4px] focus:outline-none focus:ring-2 ${
               error?.[currencyId] ? "focus:ring-red-400" : "focus:ring-blue-400"
-            } appearance-none`} currencyValue={currencyValue} onChangeCurrency={onChangeCurrency}
+            } appearance-none`}
+            onChange={onChangeCurrency}  // Handle change of currency
           >
             {currencies.map((currency) => (
               <option key={currency} value={currency}>
