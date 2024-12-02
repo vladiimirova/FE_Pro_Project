@@ -1,11 +1,17 @@
 interface CurrencyInputProps {
-  id: string; // Унікальний ідентифікатор для input (суми)
-  currencyId: string; // Унікальний ідентифікатор для select (валюти)
+  id: string;
+  currencyId: string;
   label: string;
   register: any;
   error: Record<string, { message?: string }> | undefined;
   currencies: string[];
+  currencyValue: string;
+  placeholder: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeCurrency?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string; // Add value to the interface to accept it as a prop
 }
+
 
 function CurrencyInput({
   id,
@@ -14,6 +20,11 @@ function CurrencyInput({
   register,
   error,
   currencies,
+  currencyValue,
+  placeholder,
+  onChange,
+  onChangeCurrency,
+  value, // Destructure the value prop
 }: CurrencyInputProps) {
   return (
     <div>
@@ -28,15 +39,17 @@ function CurrencyInput({
           <input
             id={id}
             type="text"
-            placeholder="Введіть суму грошей"
+            placeholder={placeholder}
             {...register(id)}
             className={`w-[220px] h-[60px] border-[1px] border-solid ${
               error?.[id] ? "border-red-500" : "border-gray-300"
             } text-[20px] font-roboto text-gray font-medium rounded-[4px] focus:outline-none focus:ring-2 ${
               error?.[id] ? "focus:ring-red-400" : "focus:ring-blue-400"
             } text-center`}
+            onChange={onChange} 
+            value={value}
           />
-          {/* Перевірка на наявність повідомлення про помилку */}
+          {/* Error message */}
           {error?.[id]?.message && (
             <p className="text-red-500 text-sm mt-1">{error[id]?.message}</p>
           )}
@@ -49,7 +62,7 @@ function CurrencyInput({
               error?.[currencyId] ? "border-red-500" : "border-gray-300"
             } text-[20px] font-roboto text-gray font-medium rounded-[4px] focus:outline-none focus:ring-2 ${
               error?.[currencyId] ? "focus:ring-red-400" : "focus:ring-blue-400"
-            } appearance-none`}
+            } appearance-none`} currencyValue={currencyValue} onChangeCurrency={onChangeCurrency}
           >
             {currencies.map((currency) => (
               <option key={currency} value={currency}>
