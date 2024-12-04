@@ -24,7 +24,7 @@ function ConverterCalculator({ addToHistory }: ConverterCalculatorProps) {
     },
   });
 
-const currencies = ['USD', 'UAH', 'EUR', 'GBP'];
+const currencies = ['USD', 'UAH', 'EUR', 'GBP', 'CNY'];
 
   const [currencyFrom, setCurrencyFrom] = useState('UAH');
   const [currencyTo, setCurrencyTo] = useState('USD'); 
@@ -54,9 +54,8 @@ const currencies = ['USD', 'UAH', 'EUR', 'GBP'];
     }
     
     const formattedDate = format(new Date(date), 'dd.MM.yyyy');
-  
     const cacheKey = `exchangeRate_${fromCurrency}_${toCurrency}_${formattedDate}`;
-  
+    
     const cachedData = localStorage.getItem(cacheKey);
     if (cachedData) {
       const parsedData = JSON.parse(cachedData);
@@ -64,60 +63,64 @@ const currencies = ['USD', 'UAH', 'EUR', 'GBP'];
       setExchangeRate(parsedData.rate);
       return;
     }
-  
+    
     try {
       const response = await fetch(
         `http://localhost:8080/https://api.privatbank.ua/p24api/exchange_rates?json&date=${formattedDate}`
       );
-  
+    
       if (!response.ok) {
         console.error('Ошибка при получении данных:', response.statusText);
         setExchangeRate(null);
         return;
       }
-  
+    
       const data = await response.json();
       let rate = null;
-  
+    
       if (fromCurrency === 'UAH' || toCurrency === 'UAH') {
         const fromRate = data.exchangeRate.find(
           (rate: { currency: string }) => rate.currency === (fromCurrency === 'UAH' ? toCurrency : fromCurrency)
         );
-  
-        if (fromRate?.saleRate) {
-          rate = fromRate.saleRate;
-        } else {
+    
+        if (fromRate) {
+          rate = fromRate.saleRate || fromRate.saleRateNB || null;
+        }
+        
+        if (!rate) {
           console.error('Курс для выбранной валюты не найден.');
           setExchangeRate(null);
           return;
         }
-      }else {
-        const fromCurrencyRate = data.exchangeRate.find(function(rate: { currency: string }) {
-          return rate.currency === fromCurrency;
-        });
-      
-        const toCurrencyRate = data.exchangeRate.find(function(rate: { currency: string }) {
-          return rate.currency === toCurrency;
-        });
-      
-        if (fromCurrencyRate && fromCurrencyRate.saleRate && toCurrencyRate && toCurrencyRate.saleRate) {
-          rate = toCurrencyRate.saleRate / fromCurrencyRate.saleRate;
-        } else {
+      } else {
+        const fromCurrencyRate = data.exchangeRate.find((rate: { currency: string }) => rate.currency === fromCurrency);
+        const toCurrencyRate = data.exchangeRate.find((rate: { currency: string }) => rate.currency === toCurrency);
+    
+        if (fromCurrencyRate && toCurrencyRate) {
+          const fromRate = fromCurrencyRate.saleRate || fromCurrencyRate.saleRateNB || null;
+          const toRate = toCurrencyRate.saleRate || toCurrencyRate.saleRateNB || null;
+    
+          if (fromRate && toRate) {
+            rate = toRate / fromRate;
+          }
+        }
+    
+        if (!rate) {
           console.error('Не удалось найти курсы для одной из валют.');
           setExchangeRate(null);
           return;
         }
       }
-
+    
       setExchangeRate(rate);
-  
       localStorage.setItem(cacheKey, JSON.stringify({ rate }));
       console.log(`Данные для ${formattedDate} сохранены в localStorage.`);
     } catch (error) {
       console.error('Ошибка при запросе курса валют:', error);
       setExchangeRate(null);
     }
-  };
+  }
+  
   
   function isCacheValid(date: string): boolean {
     const lastFetchedDate = localStorage.getItem('lastFetchedDate');
