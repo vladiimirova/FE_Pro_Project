@@ -258,8 +258,16 @@ useEffect(() => {
   const handleFromChange = (e: { target: { value: string } }) => {
     const inputValue = e.target.value;
   
+    // Если значение пустое, сбрасываем оба инпута
+    if (inputValue === '') {
+      setFromValue('');
+      setToValue('');
+      setFromError(''); // Очистка ошибок, если они были
+      return;
+    }
+  
+    // Преобразование строки в число внутри схемы с использованием Zod
     try {
-      // Преобразование строки в число внутри схемы
       schemaConverter.shape.haveMoney.parse(inputValue);
       setFromError(''); // Если ошибка, сбрасываем ошибку
     } catch (err) {
@@ -270,7 +278,7 @@ useEffect(() => {
       }
     }
   
-    setFromValue(inputValue);
+    setFromValue(inputValue); // Обновляем состояние поля ввода
   
     // Если валидный ввод и есть курс, пересчитываем
     if (exchangeRate && inputValue.trim() !== '') {
@@ -298,8 +306,16 @@ useEffect(() => {
   const handleToChange = (e: { target: { value: string } }) => {
     const inputValue = e.target.value;
   
+    // Если значение пустое, сбрасываем оба инпута
+    if (inputValue === '') {
+      setToValue('');
+      setFromValue('');
+      setToError(''); // Очистка ошибок, если они были
+      return;
+    }
+  
+    // Преобразование строки в число внутри схемы с использованием Zod
     try {
-      // Преобразование строки в число внутри схемы
       schemaConverter.shape.wantMoney.parse(inputValue);
       setToError(''); // Если ошибка, сбрасываем ошибку
     } catch (err) {
@@ -310,7 +326,7 @@ useEffect(() => {
       }
     }
   
-    setToValue(inputValue);
+    setToValue(inputValue); // Обновляем состояние поля ввода
   
     // Если валидный ввод и есть курс, пересчитываем
     if (exchangeRate && inputValue.trim() !== '') {
@@ -335,6 +351,7 @@ useEffect(() => {
     }
   };
   
+  
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDate = e.target.value;
@@ -348,18 +365,28 @@ useEffect(() => {
   }, [selectedDate, currencyFrom, currencyTo]);
 
   // Обработчик отправки формы
-  function onSubmit(data: FormData) {
-    console.log('Форма отправлена:', data);
-    alert('Валюта конвертована!');
-
-    addToHistory({
-      date: data.date,
-      haveMoney: data.haveMoney,
-      wantMoney: data.wantMoney,
-      fromCurrency: data.fromCurrency,
-      toCurrency: data.toCurrency,
-    });
+ // Обработчик отправки формы
+function onSubmit(data: FormData) {
+  // Проверка на наличие ошибок валидации
+  if (Object.keys(errors).length > 0) {
+    console.log('Есть ошибки валидации, форма не будет отправлена');
+    alert('Пожалуйста, исправьте ошибки в форме');
+    return; // Прерываем выполнение функции отправки
   }
+
+  // Если ошибок нет, продолжаем выполнение
+  console.log('Форма отправлена:', data);
+  alert('Валюта конвертована!');
+
+  addToHistory({
+    date: data.date,
+    haveMoney: data.haveMoney,
+    wantMoney: data.wantMoney,
+    fromCurrency: data.fromCurrency,
+    toCurrency: data.toCurrency,
+  });
+}
+
 
   return (
     <div className="bg-custom-light-blue flex justify-center">
