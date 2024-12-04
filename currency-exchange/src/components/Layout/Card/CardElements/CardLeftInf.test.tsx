@@ -3,8 +3,8 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom'; 
 import CardLeftInf from './CardLeftInf';
 
-describe('CardLeftInf', () => {
-  test('Отображает заголовок и текст', () => {
+describe('CardLeftInf', function() {
+  test('Отображает заголовок и текст', function() {
     render(
       <Router>
         <CardLeftInf />
@@ -18,7 +18,7 @@ describe('CardLeftInf', () => {
     expect(paragraphElement).toBeInTheDocument();
   });
 
-  test('Кнопка ведет на /converter', () => {
+  test('Кнопка ведет на /converter', function() {
     render(
       <Router>
         <CardLeftInf />

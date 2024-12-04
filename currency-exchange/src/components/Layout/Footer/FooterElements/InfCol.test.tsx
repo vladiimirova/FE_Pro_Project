@@ -1,10 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import InfCol from './InfCol'; 
+import InfCol from './InfCol';
 
-describe('InfCol component', () => {
-  test('Отображает все ссылки с правильными текстами', () => {
+describe('InfCol компонент', function() {
+  test('Отображает все ссылки с правильными текстами', function() {
     const { getByText } = render(
       <Router>
         <InfCol />
@@ -17,7 +17,7 @@ describe('InfCol component', () => {
     expect(getByText(/Задати питання/i)).toBeInTheDocument();
   });
 
-  test('Ссылки ведут на правильные адреса', () => {
+  test('Ссылки ведут на правильные адреса', function() {
     const { getByText } = render(
       <Router>
         <InfCol />
@@ -35,7 +35,7 @@ describe('InfCol component', () => {
     expect(questionLink.closest('a')).toHaveAttribute('href', '/');
   });
 
-  test('Все ссылки имеют правильные стили', () => {
+  test('Все ссылки имеют правильные стили', function() {
     const { container } = render(
       <Router>
         <InfCol />
@@ -43,7 +43,7 @@ describe('InfCol component', () => {
     );
 
     const links = container.querySelectorAll('a');
-    links.forEach(link => {
+    links.forEach(function(link) {
       expect(link).toHaveClass('text-gray');
       expect(link).toHaveClass('font-roboto');
       expect(link).toHaveClass('font-medium');

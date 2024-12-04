@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import MainImg from './MainImg'; 
+import MainImg from './MainImg';
 
-describe('MainImg component', () => {
-  test('Отображает изображение с правильным src и alt атрибутами', () => {
+describe('MainImg component', function () {
+  test('Отображает изображение с правильным src и alt атрибутами', function () {
     render(<MainImg />);
 
     const img = screen.getByAltText(/main-photo/i);
@@ -12,7 +12,7 @@ describe('MainImg component', () => {
     expect(img).toHaveAttribute('alt', 'main-photo');
   });
 
-  test('Проверка наличия правильного класса изображения', () => {
+  test('Проверка наличия правильного класса изображения', function () {
     render(<MainImg />);
 
     const img = screen.getByAltText(/main-photo/i);

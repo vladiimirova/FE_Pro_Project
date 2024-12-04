@@ -3,8 +3,8 @@ import { render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import AdressCol from './AdressCol';
 
-describe('AdressCol component', () => {
-  test('Отображает логотип и текст "Чіп Чендж"', () => {
+describe('AdressCol component', function() {
+  test('Отображает логотип и текст "Чіп Чендж"', function() {
     const { getByAltText, getByText } = render(
       <Router>
         <AdressCol />
@@ -18,7 +18,7 @@ describe('AdressCol component', () => {
     expect(text).toBeInTheDocument();
   });
 
-  test('Ссылка ведет на /', () => {
+  test('Ссылка ведет на /', function() {
     const { getByRole } = render(
       <Router>
         <AdressCol />
@@ -29,7 +29,7 @@ describe('AdressCol component', () => {
     expect(link).toHaveAttribute('href', '/');
   });
 
-  test('Отображает адрес и информацию о лицензии', () => {
+  test('Отображает адрес и информацию о лицензии', function() {
     const { getByText } = render(
       <Router>
         <AdressCol />
@@ -37,8 +37,8 @@ describe('AdressCol component', () => {
     );
 
     const addressText = getByText(/04128, м\.Київ, вул\. Хрещатик, 19/);
-    const licenseText = getByText(/Ліцензія НБУ №156/i);  // Case-insensitive regex
-    const copyrightText = getByText(/Ⓒ\s*ПАТ ЧіпЧендж, 2019-2023/i);  // Flexible regex for copyright
+    const licenseText = getByText(/Ліцензія НБУ №156/i);  
+    const copyrightText = getByText(/Ⓒ\s*ПАТ ЧіпЧендж, 2019-2023/i);  
 
     expect(addressText).toBeInTheDocument();
     expect(licenseText).toBeInTheDocument();

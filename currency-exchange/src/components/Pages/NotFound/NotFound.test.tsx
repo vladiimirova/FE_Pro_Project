@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import NotFound from './NotFound'; 
+import NotFound from './NotFound';
 
-describe('NotFound component', () => {
-  test('Отображает текст 404 и сообщение о том, что страница не найдена', () => {
+describe('NotFound component', function () {
+  test('Отображает текст 404 и сообщение о том, что страница не найдена', function () {
     render(<NotFound />);
 
     const heading = screen.getByText('404');
@@ -18,7 +18,7 @@ describe('NotFound component', () => {
     expect(suggestionMessage).toBeInTheDocument();
   });
 
-  test('Ссылка на главную страницу рендерится корректно', () => {
+  test('Ссылка на главную страницу рендерится корректно', function () {
     render(<NotFound />);
 
     const link = screen.getByRole('link', { name: /Повернутись на головну/i });
@@ -26,7 +26,7 @@ describe('NotFound component', () => {
     expect(link).toHaveAttribute('href', '/');
   });
 
-  test('Проверка стилей и классов', () => {
+  test('Проверка стилей и классов', function () {
     render(<NotFound />);
 
     const heading = screen.getByText('404');

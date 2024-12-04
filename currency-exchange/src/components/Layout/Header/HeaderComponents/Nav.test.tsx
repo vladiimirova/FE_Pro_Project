@@ -3,8 +3,8 @@ import { render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Nav from './Nav';
 
-describe('Nav component', () => {
-  test('Отображает все ссылки', () => {
+describe('Nav component', function() {
+  test('Отображает все ссылки', function() {
     const { getByText } = render(
       <Router>
         <Nav />
@@ -22,7 +22,7 @@ describe('Nav component', () => {
     expect(questionsLink).toBeInTheDocument();
   });
 
-  test('Ссылки ведут на правильные страницы', () => {
+  test('Ссылки ведут на правильные страницы', function() {
     const { getByRole } = render(
       <Router>
         <Nav />

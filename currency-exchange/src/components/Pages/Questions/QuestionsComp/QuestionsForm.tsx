@@ -3,7 +3,6 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-// Схема валидации с Zod
 const schema = z.object({
   name: z
     .string()
@@ -13,7 +12,6 @@ const schema = z.object({
   question: z.string().min(10, 'Питання має бути не менше 10 символів'),
 });
 
-// Тип данных формы
 type FormData = z.infer<typeof schema>;
 
 function QuestionsForm(): JSX.Element {
@@ -25,12 +23,11 @@ function QuestionsForm(): JSX.Element {
     resolver: zodResolver(schema), 
   });
 
-  // Типизация обработчика onSubmit
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const onSubmit: SubmitHandler<FormData> = function (data) {
     console.log('Форма отправлена:', data);
     alert('Ваше питання було успішно надіслано!');
   };
-
+  
   return (
     <div className="bg-custom-light-blue flex justify-center">
       <div className="container">
@@ -41,7 +38,6 @@ function QuestionsForm(): JSX.Element {
             </h3>
             <form onSubmit={handleSubmit(onSubmit)}>
 
-              {/* Поле имени */}
               <div className="mb-4">
                 <label
                   htmlFor="name"
@@ -67,7 +63,6 @@ function QuestionsForm(): JSX.Element {
                 )}
               </div>
 
-              {/* Поле email */}
               <div className="mb-4">
                 <label
                   htmlFor="email"
@@ -93,7 +88,6 @@ function QuestionsForm(): JSX.Element {
                 )}
               </div>
 
-              {/* Поле вопроса */}
               <div className="mb-4">
                 <label
                   htmlFor="question"
@@ -121,7 +115,6 @@ function QuestionsForm(): JSX.Element {
                 )}
               </div>
 
-              {/* Кнопка отправки */}
               <button
                 type="submit"
                 className="w-full py-3 bg-blue-500 text-white font-medium rounded-md hover:bg-blue-600 transition-colors"

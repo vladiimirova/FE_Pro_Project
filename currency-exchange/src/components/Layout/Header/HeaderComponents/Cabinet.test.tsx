@@ -3,8 +3,8 @@ import { render, RenderResult } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Cabinet from './Cabinet';
 
-describe('Cabinet component', () => {
-  test('Отображает иконку и текст', () => {
+describe('Cabinet component', function() {
+  test('Отображает иконку и текст', function() {
     const { getByText, getByAltText }: RenderResult = render(
       <Router>
         <Cabinet />
@@ -18,7 +18,7 @@ describe('Cabinet component', () => {
     expect(text).toBeInTheDocument();
   });
 
-  test('Ссылка ведет на /cabinet', () => {
+  test('Ссылка ведет на /cabinet', function() {
     const { getByRole }: RenderResult = render(
       <Router>
         <Cabinet />

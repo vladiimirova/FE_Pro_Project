@@ -1,17 +1,16 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import CabinetTitle from './CabinetTitle'; 
+import CabinetTitle from './CabinetTitle';
 
-describe('CabinetTitle component', () => {
-  test('Отображает заголовок и описание', () => {
+describe('CabinetTitle component', function() {
+  test('Отображает заголовок и описание', function() {
     render(<CabinetTitle />);
 
     expect(screen.getByText("Особистий кабінет")).toBeInTheDocument();
-
     expect(screen.getByText("Керуйте своїми даними та обліковим записом")).toBeInTheDocument();
   });
 
-  test('Проверка правильных стилей заголовка и описания', () => {
+  test('Проверка правильных стилей заголовка и описания', function() {
     const { container } = render(<CabinetTitle />);
 
     const title = container.querySelector('h2');
@@ -22,3 +21,4 @@ describe('CabinetTitle component', () => {
     expect(description).toHaveClass('text-lg');
   });
 });
+

@@ -4,7 +4,7 @@ interface DateInputProps {
   id: string;
   register: any; // Типізуємо `register`
   error: { message?: string } | undefined;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; // Добавляем опциональный обработчик onChange
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; 
 }
 
 function DateInput({ id, register, error, onChange }: DateInputProps) {
@@ -14,13 +14,13 @@ function DateInput({ id, register, error, onChange }: DateInputProps) {
         <input
           id={id}
           type="date"
-          {...register(id)} // Используем типизированный register
+          {...register(id)} 
           className={`w-full h-[60px] border-[1px] border-solid border-gray-line text-[20px] font-roboto text-gray font-medium flex justify-start pl-[20px] ${
             error ? "border-red-500" : "border-gray-300"
           } rounded-[4px] focus:outline-none focus:ring-2 ${
             error ? "focus:ring-red-400" : "focus:ring-blue-400"
           } text-center custom-calendar-icon`}
-          onChange={onChange} // Добавляем обработчик onChange
+          onChange={onChange}
         />
         <span className="absolute right-[17px] top-[50%] transform -translate-y-1/2 pointer-events-none">
           <img
@@ -30,7 +30,6 @@ function DateInput({ id, register, error, onChange }: DateInputProps) {
           />
         </span>
       </div>
-      {/* Перевірка на наявність повідомлення про помилку */}
       {error?.message && <p className="text-red-500 text-sm mt-1">{error.message}</p>}
     </div>
   );

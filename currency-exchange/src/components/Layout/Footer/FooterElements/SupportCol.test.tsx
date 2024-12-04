@@ -1,9 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import SupportCol from './SupportCol'; 
+import SupportCol from './SupportCol';
 
-describe('SupportCol component', () => {
-  test('Отображает телефон с правильной иконкой и текстом', () => {
+describe('SupportCol компонент', function() {
+  test('Отображает телефон с правильной иконкой и текстом', function() {
     const { getByText, getByAltText } = render(<SupportCol />);
 
     const phoneIcon = getByAltText('phone');
@@ -13,21 +13,21 @@ describe('SupportCol component', () => {
     expect(phoneNumber).toBeInTheDocument();
   });
 
-  test('Телефонная ссылка работает корректно', () => {
+  test('Телефонная ссылка работает корректно', function() {
     const { getByText } = render(<SupportCol />);
 
     const phoneLink = getByText('3773').closest('a');
     expect(phoneLink).toHaveAttribute('href', 'tel:3773');
   });
 
-  test('Текст о круглосуточной поддержке отображается правильно', () => {
+  test('Текст о круглосуточной поддержке отображается правильно', function() {
     const { getByText } = render(<SupportCol />);
 
     const supportText = getByText(/Цілодобова підтримка/i);
     expect(supportText).toBeInTheDocument();
   });
 
-  test('Все элементы имеют правильные стили', () => {
+  test('Все элементы имеют правильные стили', function() {
     const { container } = render(<SupportCol />);
 
     const phoneLink = container.querySelector('a');

@@ -3,10 +3,12 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import MainLeftInf from './MainLeftInf';
 
-describe('MainLeftInf component', () => {
-  const renderWithRouter = (ui: React.ReactElement) => render(<MemoryRouter>{ui}</MemoryRouter>);
+describe('MainLeftInf component', function () {
+  const renderWithRouter = function (ui: React.ReactElement) {
+    return render(<MemoryRouter>{ui}</MemoryRouter>);
+  };
 
-  test('Отображает заголовок и текст правильно', () => {
+  test('Отображает заголовок и текст правильно', function () {
     renderWithRouter(<MainLeftInf />);
 
     const heading = screen.getByText(/конвертер валют/i);
@@ -16,7 +18,7 @@ describe('MainLeftInf component', () => {
     expect(paragraph).toBeInTheDocument();
   });
 
-  test('Кнопка рендерится с правильным текстом и ссылкой', () => {
+  test('Кнопка рендерится с правильным текстом и ссылкой', function () {
     renderWithRouter(<MainLeftInf />);
 
     const button = screen.getByRole('link', { name: /конвертувати валюту/i });
@@ -24,7 +26,7 @@ describe('MainLeftInf component', () => {
     expect(button).toHaveAttribute('href', '/converter');
   });
 
-  test('Кнопка имеет правильные классы стилей', () => {
+  test('Кнопка имеет правильные классы стилей', function () {
     renderWithRouter(<MainLeftInf />);
 
     const button = screen.getByRole('link', { name: /конвертувати валюту/i });

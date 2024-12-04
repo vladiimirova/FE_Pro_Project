@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import ContactsInf from './ContactsInf'; 
+import ContactsInf from './ContactsInf';
 
-describe('ContactsInf component', () => {
-  test('Отображает адрес с правильной ссылкой на карту', () => {
+describe('ContactsInf component', function() {
+  test('Отображает адрес с правильной ссылкой на карту', function() {
     render(<ContactsInf />);
 
     const addressLink = screen.getByText(/м. Київ, вул. Центральна, 123/i);
@@ -11,7 +11,7 @@ describe('ContactsInf component', () => {
     expect(addressLink).toHaveAttribute('href', 'https://www.google.com.ua/maps/place/вулиця+Центральна,+123,+Київська+область/@50.3106228,30.6641123,17z/data=!3m1!4b1!4m5!3m4!1s0x40d4c102b0a7592b:0xc35eb418269aa358!8m2!3d50.3106194!4d30.6666872?hl=ru&entry=ttu&g_ep=EgoyMDI0MTExOS4yIKXMDSoASAFQAw%3D%3D');
   });
 
-  test('Отображает телефон с правильной ссылкой для звонка', () => {
+  test('Отображает телефон с правильной ссылкой для звонка', function() {
     render(<ContactsInf />);
 
     const phoneLink = screen.getByText('+380 (12) 345-67-89');
@@ -19,7 +19,7 @@ describe('ContactsInf component', () => {
     expect(phoneLink).toHaveAttribute('href', 'tel:+380123456789');
   });
 
-  test('Отображает email с правильной ссылкой для отправки почты', () => {
+  test('Отображает email с правильной ссылкой для отправки почты', function() {
     render(<ContactsInf />);
 
     const emailLink = screen.getByText('info@chipchange.ua');
@@ -27,7 +27,7 @@ describe('ContactsInf component', () => {
     expect(emailLink).toHaveAttribute('href', 'mailto:info@chipchange.ua');
   });
 
-  test('Проверка правильных стилей и заголовков', () => {
+  test('Проверка правильных стилей и заголовков', function() {
     const { container } = render(<ContactsInf />);
 
     // Проверяем, что заголовки имеют правильный стиль
