@@ -6,49 +6,9 @@ import CurrencyInput from './FormComp/CurrencyInput';
 import DateInput from './FormComp/DateInput';
 import { format } from 'date-fns';
 import { FormData, ConverterCalculatorProps } from '../../../Interfaces/Interfaces';
+import { schemaConverter } from './FormComp/ConverterValidation';
 
 const today = format(new Date(), 'yyyy-MM-dd');
-
-const schemaConverter = z.object({
-  haveMoney: z
-    .string()
-    .nonempty("Це поле обов'язкове")
-    .transform(function(input) {
-      return parseFloat(input);
-    })
-    .refine(function(value) {
-      return value > 0;
-    }, 'Значення повинно бути позитивним'),
-
-  wantMoney: z
-    .string()
-    .nonempty("Це поле обов'язкове")
-    .transform(function(input) {
-      return parseFloat(input);
-    })
-    .refine(function(value) {
-      return value > 0;
-    }, 'Значення повинно бути позитивним'),
-
-  date: z
-    .string()
-    .nonempty('Оберіть дату')
-    .refine(function(date) {
-      return !isNaN(Date.parse(date));
-    }, {
-      message: 'Неправильний формат дати',
-    })
-    .refine(function(date) {
-      const selectedDate = new Date(date);
-      const today = new Date();
-      const sevenDaysAgo = new Date(today);
-      sevenDaysAgo.setDate(today.getDate() - 7); 
-
-      return selectedDate >= sevenDaysAgo && selectedDate <= today;
-    }, {
-      message: 'Дата повинна бути в межах сьогоднішнього дня і 7 днів назад',
-    }),
-});
 
 function ConverterCalculator({ addToHistory }: ConverterCalculatorProps) {
   const {
