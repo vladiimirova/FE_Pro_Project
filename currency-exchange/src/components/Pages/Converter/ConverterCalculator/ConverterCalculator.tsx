@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import CurrencyInput from './FormComp/CurrencyInput';
 import DateInput from './FormComp/DateInput';
 import { format } from 'date-fns';
+import { FormData, ConverterCalculatorProps } from '../../../Interfaces/Interfaces';
 
 const today = format(new Date(), 'yyyy-MM-dd');
 
@@ -48,18 +49,6 @@ const schemaConverter = z.object({
       message: 'Дата повинна бути в межах сьогоднішнього дня і 7 днів назад',
     }),
 });
-
-interface FormData {
-  haveMoney: string;
-  wantMoney: string;
-  fromCurrency: 'UAH' | 'USD' | 'EUR' | 'GBP';
-  toCurrency: 'UAH' | 'USD' | 'EUR' | 'GBP';
-  date: string;
-}
-
-interface ConverterCalculatorProps {
-  addToHistory: (newRecord: any) => void;
-}
 
 function ConverterCalculator({ addToHistory }: ConverterCalculatorProps) {
   const {

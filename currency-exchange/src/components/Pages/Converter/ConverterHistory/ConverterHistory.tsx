@@ -1,19 +1,7 @@
 import React from 'react';
 import HistoryTitle from './HistoryComp/HistoryTitle';
 import HistoryInf from './HistoryComp/HistoryInf';
-
-interface HistoryItem {
-  date: string;
-  haveMoney: string;
-  wantMoney: string;
-  fromCurrency: string;
-  toCurrency: string;
-}
-
-interface ConverterHistoryProps {
-  history: HistoryItem[];
-  onClear: () => void;
-}
+import { ConverterHistoryProps } from '../../../Interfaces/Interfaces';
 
 function ConverterHistory({
   history,

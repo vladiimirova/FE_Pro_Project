@@ -1,10 +1,4 @@
-interface HistoryInfProps {
-  date: string;
-  haveMoney: string;
-  wantMoney: string;
-  fromCurrency: string;
-  toCurrency: string;
-}
+import { HistoryInfProps } from '../../../../Interfaces/Interfaces';
 
 function HistoryInf({ date, haveMoney, wantMoney, fromCurrency, toCurrency }: HistoryInfProps): JSX.Element {
   return (

@@ -1,16 +1,4 @@
-interface CurrencyInputProps {
-  id: string;
-  currencyId: string;
-  label: string;
-  register: any;
-  error: Record<string, { message?: string }> | undefined;
-  currencies: string[];
-  currencyValue: string;
-  placeholder: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onChangeCurrency?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  value?: string;
-}
+import { CurrencyInputProps } from '../../../../Interfaces/Interfaces';
 
 function CurrencyInput({
   id,

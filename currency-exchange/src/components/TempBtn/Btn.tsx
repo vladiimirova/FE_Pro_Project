@@ -2,13 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
 import { twMerge } from 'tailwind-merge';
-
-interface BtnProps {
-  className?: string; 
-  to?: string;        
-  text: string;       
-  onClick?: () => void; 
-}
+import { BtnProps } from '../Interfaces/Interfaces';
 
 function Btn({ className, to = '/', text, onClick }:BtnProps) : JSX.Element {
   function onClickHandler(evt: React.MouseEvent<HTMLAnchorElement>): void {

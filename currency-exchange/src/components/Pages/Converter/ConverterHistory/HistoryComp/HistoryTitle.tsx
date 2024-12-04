@@ -1,9 +1,6 @@
 import React from "react";
 import Btn from '../../../../TempBtn/Btn';
-
-interface HistoryTitleProps {
-  onClear: () => void;
-}
+import { HistoryTitleProps } from '../../../../Interfaces/Interfaces';
 
 function HistoryTitle({ onClear }: HistoryTitleProps): JSX.Element {
   return (

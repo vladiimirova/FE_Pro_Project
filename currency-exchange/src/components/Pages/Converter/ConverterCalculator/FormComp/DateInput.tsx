@@ -1,11 +1,5 @@
 import React from "react";
-
-interface DateInputProps {
-  id: string;
-  register: any; // Типізуємо `register`
-  error: { message?: string } | undefined;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; 
-}
+import { DateInputProps } from '../../../../Interfaces/Interfaces';
 
 function DateInput({ id, register, error, onChange }: DateInputProps) {
   return (
