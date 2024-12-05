@@ -2,16 +2,18 @@ import { z } from 'zod';
 
 export const schemaConverter = z.object({
   haveMoney: z
-    .string()
-    .nonempty("Це поле обов'язкове")
-    .transform((input) => parseFloat(input))
-    .refine((value) => value > 0, 'Значення повинно бути позитивним'),
+  .string()
+  .refine((val) => /^[0-9]*\.?[0-9]*$/.test(val.trim()), { message: 'Введіть лише цифри та крапку' }) 
+  .refine((val) => val !== '', { message: 'Це поле обов\'язкове' })
+  .transform((input) => parseFloat(input))
+  .refine((value) => !isNaN(value) && value >= 0, { message: 'Значення повинно бути позитивним' }),
 
-  wantMoney: z
-    .string()
-    .nonempty("Це поле обов'язкове")
-    .transform((input) => parseFloat(input))
-    .refine((value) => value > 0, 'Значення повинно бути позитивним'),
+wantMoney: z
+  .string()
+  .refine((val) => /^[0-9]*\.?[0-9]*$/.test(val.trim()), { message: 'Введіть лише цифри та крапку' }) 
+  .refine((val) => val !== '', { message: 'Це поле обов\'язкове' })
+  .transform((input) => parseFloat(input))
+  .refine((value) => !isNaN(value) && value >= 0, { message: 'Значення повинно бути позитивним' }),
 
   date: z
     .string()

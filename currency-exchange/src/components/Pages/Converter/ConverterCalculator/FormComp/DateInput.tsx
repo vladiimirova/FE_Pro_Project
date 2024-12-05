@@ -4,7 +4,7 @@ import { DateInputProps } from '../../../../Interfaces/Interfaces';
 function DateInput({ id, register, error, onChange }: DateInputProps) {
   return (
     <div>
-      <div className="relative mt-[24px] w-[220px]">
+      <div className="relative w-[220px]">
         <input
           id={id}
           type="date"
@@ -24,7 +24,9 @@ function DateInput({ id, register, error, onChange }: DateInputProps) {
           />
         </span>
       </div>
-      {error?.message && <p className="text-red-500 text-sm mt-1">{error.message}</p>}
+       <div className="text-red-500 text-sm mt-1 h-[16px] leading-[16px]">
+        {error?.message || '\u00A0'}
+      </div>
     </div>
   );
 }

@@ -16,6 +16,7 @@ function ConverterCalculator({ addToHistory }: ConverterCalculatorProps) {
     register,
     handleSubmit,
     formState: { errors },
+    trigger,
   } = useForm<FormData>({
     resolver: zodResolver(schemaConverter),
     defaultValues: {
@@ -36,8 +37,8 @@ const currencies = ['USD', 'UAH', 'EUR', 'GBP', 'CNY'];
 
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const [fromValue, setFromValue] = useState('');
-  const [toValue, setToValue] = useState('');
+  const [fromValue, setFromValue] = useState('1000');
+  const [toValue, setToValue] = useState('38.7');
   const [fromError, setFromError] = useState<string | null>(null);
   const [toError, setToError] = useState<string | null>(null); 
 
@@ -195,7 +196,7 @@ const currencies = ['USD', 'UAH', 'EUR', 'GBP', 'CNY'];
 
   function handleFromChange(e: { target: { value: string } }) {
     const inputValue = e.target.value;
-  
+
     if (inputValue === '') {
       setFromValue('');
       setToValue('');
@@ -236,7 +237,7 @@ const currencies = ['USD', 'UAH', 'EUR', 'GBP', 'CNY'];
   
   function handleToChange(e: { target: { value: string } }) {
     const inputValue = e.target.value;
-  
+
     if (inputValue === '') {
       setToValue('');
       setFromValue('');
@@ -278,7 +279,8 @@ const currencies = ['USD', 'UAH', 'EUR', 'GBP', 'CNY'];
   function handleDateChange(e: React.ChangeEvent<HTMLInputElement>) {
     const newDate = e.target.value;
     setSelectedDate(new Date(newDate));
-  }  
+    trigger('date'); 
+  } 
   
   useEffect(function () {
     if (selectedDate) {
@@ -308,7 +310,7 @@ const currencies = ['USD', 'UAH', 'EUR', 'GBP', 'CNY'];
   return (
     <div className="bg-custom-light-blue flex justify-center">
       <div className="container">
-        <div className="mx-auto mt-[80px] mb-[80px] pt-[53px] pb-[55px] pl-[48px] pr-[68px] bg-white shadow w-[962px]">
+        <div className="mx-auto mt-[80px] mb-[80px] pt-[53px] pb-[39px] pl-[48px] pr-[68px] bg-white shadow w-[962px]">
           <h2 className="font-roboto font-bold text-black text-[40px] leading-140 mb-[70px]">
             Конвертер валют
           </h2>
@@ -351,7 +353,7 @@ const currencies = ['USD', 'UAH', 'EUR', 'GBP', 'CNY'];
               <div className="flex justify-end">
                 <button
                   type="submit"
-                  className="font-roboto font-medium font-normal text-[18px] rounded-[4px] inline-flex items-center justify-center text-center mt-[24px] text-custom-light-blue bg-[#2C36F2] hover:bg-[#1E90FF] w-[220px] h-[60px]"
+                  className="font-roboto font-medium font-normal text-[18px] rounded-[4px] inline-flex items-center justify-center text-center text-custom-light-blue bg-[#2C36F2] hover:bg-[#1E90FF] w-[220px] h-[60px]"
                 >
                   Зберегти результат
                 </button>

@@ -36,9 +36,9 @@ function CurrencyInput({
             onChange={onChange}
             value={value}
           />
-          {error?.[id]?.message && (
-            <p className="text-red-500 text-sm mt-1">{error[id]?.message}</p>
-          )}
+          <div className="text-red-500 text-sm mt-1 h-[28px]">
+            {error?.[id]?.message}
+          </div>
         </div>
 
         <div className="relative ml-[15px] w-[120px]">
