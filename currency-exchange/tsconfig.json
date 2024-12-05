@@ -9,7 +9,7 @@
       "esModuleInterop": true,
       "skipLibCheck": true,
       "forceConsistentCasingInFileNames": true,
-      "lib": ["es2016", "dom"]  // Додаємо цю опцію
+      "lib": ["es2016", "dom"] 
     },
     "include": ["src"],
     "exclude": ["node_modules"]

@@ -7,6 +7,7 @@ import DateInput from './FormComp/DateInput';
 import { format } from 'date-fns';
 import { FormData, ConverterCalculatorProps } from '../../../Interfaces/Interfaces';
 import { schemaConverter } from './FormComp/ConverterValidation';
+import debounce from 'lodash/debounce';
 
 const today = format(new Date(), 'yyyy-MM-dd');
 
@@ -23,6 +24,10 @@ function ConverterCalculator({ addToHistory }: ConverterCalculatorProps) {
       toCurrency: 'USD',
     },
   });
+
+  const debouncedFetchExchangeRate = debounce(fetchExchangeRate, 500);
+const debouncedHandleDateChange = debounce(handleDateChange, 500);
+
 
 const currencies = ['USD', 'UAH', 'EUR', 'GBP', 'CNY'];
 
@@ -121,7 +126,6 @@ const currencies = ['USD', 'UAH', 'EUR', 'GBP', 'CNY'];
     }
   }
   
-  
   function isCacheValid(date: string): boolean {
     const lastFetchedDate = localStorage.getItem('lastFetchedDate');
     if (!lastFetchedDate) return false;
@@ -137,7 +141,7 @@ const currencies = ['USD', 'UAH', 'EUR', 'GBP', 'CNY'];
   useEffect(function () {
     if (!isCacheValid(selectedDate.toISOString())) {
       console.log('Данные устарели или их нет. Запрашиваем новые...');
-      fetchExchangeRate(currencyFrom, currencyTo, selectedDate.toISOString());
+      debouncedFetchExchangeRate(currencyFrom, currencyTo, selectedDate.toISOString());
       localStorage.setItem('lastFetchedDate', new Date().toISOString());
     } else {
       console.log('Используем кэшированные данные.');
@@ -278,7 +282,7 @@ const currencies = ['USD', 'UAH', 'EUR', 'GBP', 'CNY'];
   
   useEffect(function () {
     if (selectedDate) {
-      fetchExchangeRate(currencyFrom, currencyTo, selectedDate.toISOString());
+      debouncedFetchExchangeRate(currencyFrom, currencyTo, selectedDate.toISOString());
     }
   }, [selectedDate, currencyFrom, currencyTo]);  
 
@@ -326,7 +330,7 @@ const currencies = ['USD', 'UAH', 'EUR', 'GBP', 'CNY'];
                 onChange={handleFromChange}
                 onChangeCurrency={handleCurrencyFromChange}
               />
-              <DateInput id="date" register={register} error={errors.date}  onChange={handleDateChange} />
+              <DateInput id="date" register={register} error={errors.date}  onChange={debouncedHandleDateChange} />
             </div>
             <img src="./icons/arrows.svg" className="arrows" alt="arrows" />
             <div>
