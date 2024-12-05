@@ -6,6 +6,7 @@ function DateInput({ id, register, error, onChange }: DateInputProps) {
     <div>
       <div className="relative w-[220px]">
         <input
+         data-testid={id}
           id={id}
           type="date"
           {...register(id)} 
