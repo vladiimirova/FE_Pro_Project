@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,6 +8,7 @@ import { format } from 'date-fns';
 import { FormData, ConverterCalculatorProps } from '../../../Interfaces/Interfaces';
 import { schemaConverter } from './FormComp/ConverterValidation';
 import debounce from 'lodash/debounce';
+import { useConverterStore } from '../../../Store/Store'; 
 
 const today = format(new Date(), 'yyyy-MM-dd');
 
@@ -26,24 +27,19 @@ function ConverterCalculator({ addToHistory }: ConverterCalculatorProps) {
     },
   });
 
+
   const debouncedFetchExchangeRate = debounce(fetchExchangeRate, 500);
 const debouncedHandleDateChange = debounce(handleDateChange, 500);
 
 
 const currencies = ['USD', 'UAH', 'EUR', 'GBP', 'CNY'];
 
-  const [currencyFrom, setCurrencyFrom] = useState('UAH');
-  const [currencyTo, setCurrencyTo] = useState('USD'); 
-
-  const [selectedDate, setSelectedDate] = useState(new Date());
-
-  const [fromValue, setFromValue] = useState('1000');
-  const [toValue, setToValue] = useState('38.7');
-  const [fromError, setFromError] = useState<string | null>(null);
-  const [toError, setToError] = useState<string | null>(null); 
-
-  const [exchangeRate, setExchangeRate] = useState<number | null>(null);
-
+  const {
+    currencyFrom, currencyTo, fromValue, toValue, exchangeRate, selectedDate,
+    fromError, toError, setCurrencyFrom, setCurrencyTo, setFromValue, setToValue,
+    setExchangeRate, setSelectedDate, setFromError, setToError
+  } = useConverterStore(state => state);
+  
   function validateDate(date: string): boolean {
     const selectedDate = new Date(date);
     const today = new Date();
@@ -294,10 +290,10 @@ const currencies = ['USD', 'UAH', 'EUR', 'GBP', 'CNY'];
       alert('Пожалуйста, исправьте ошибки в форме');
       return; 
     }
-
+  
     console.log('Форма отправлена:', data);
     alert('Валюта конвертована!');
-
+  
     addToHistory({
       date: data.date,
       haveMoney: data.haveMoney,
@@ -306,6 +302,7 @@ const currencies = ['USD', 'UAH', 'EUR', 'GBP', 'CNY'];
       toCurrency: data.toCurrency,
     });
   }
+  
 
   return (
     <div className="bg-custom-light-blue flex justify-center">

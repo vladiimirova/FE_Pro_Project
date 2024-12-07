@@ -60,7 +60,7 @@ function CurrencyInput({
               );
             })}
           </select>
-          <span className="absolute right-[12px] top-[50%] transform -translate-y-1/2 pointer-events-none">
+          <span className="absolute right-[15px] top-[30px] transform -translate-y-1/2 pointer-events-none">
             <img
               src="./icons/down-arrow.svg"
               alt="arrow"

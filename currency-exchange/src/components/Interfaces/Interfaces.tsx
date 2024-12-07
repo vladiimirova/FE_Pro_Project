@@ -63,3 +63,34 @@ export interface HistoryItem {
   export interface ConverterCalculatorProps {
     addToHistory: (newRecord: any) => void;
   }
+
+  export interface ConversionHistoryRecord {
+    date: string;
+    haveMoney: string;
+    wantMoney: string;
+    fromCurrency: string;
+    toCurrency: string;
+  }
+  
+  export interface ConverterState {
+    currencyFrom: string;
+    currencyTo: string;
+    fromValue: string;
+    toValue: string;
+    exchangeRate: number | null;
+    selectedDate: Date;
+    fromError: string | null;
+    toError: string | null;
+    history: ConversionHistoryRecord[];
+    setCurrencyFrom(currency: string): void;
+    setCurrencyTo(currency: string): void;
+    setFromValue(value: string): void;
+    setToValue(value: string): void;
+    setExchangeRate(rate: number | null): void;
+    setSelectedDate(date: Date): void;
+    setFromError(error: string | null): void;
+    setToError(error: string | null): void;
+    addToHistory(record: ConversionHistoryRecord): void;
+    clearHistory(): void;
+  }
+  

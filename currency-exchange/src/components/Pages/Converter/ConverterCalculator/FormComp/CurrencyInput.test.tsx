@@ -6,9 +6,9 @@ describe('CurrencyInput Component', () => {
     id: 'amount',
     currencyId: 'currency',
     label: 'Amount',
-    register: jest.fn(() => ({ name: 'amount' })), // Mock функція register
+    register: jest.fn(() => ({ name: 'amount' })),
     error: {
-      amount: { message: '' }, // Замінено на порожній об'єкт з message
+      amount: { message: '' }, 
       currency: { message: '' },
     },
     currencies: ['USD', 'EUR', 'GBP'],

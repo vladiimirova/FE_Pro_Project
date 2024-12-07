@@ -22,7 +22,8 @@
     "tailwind-merge": "^2.5.4",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "zustand": "^5.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
