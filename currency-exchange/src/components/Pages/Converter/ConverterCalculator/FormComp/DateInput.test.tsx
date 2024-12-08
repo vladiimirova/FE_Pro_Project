@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import DateInput from './DateInput'; 
 import '@testing-library/jest-dom';
 
-describe('DateInput', () => {
+describe('DateInput', function () {
   const mockRegister = jest.fn();
   const mockOnChange = jest.fn();
 
@@ -13,45 +13,33 @@ describe('DateInput', () => {
     onChange: mockOnChange,
   };
 
-  test('renders DateInput component correctly', () => {
+  test('renders DateInput component correctly', function () {
     render(<DateInput {...defaultProps} />);
-    
-    // Перевірка, чи є input з відповідним id
     const inputElement = screen.getByTestId('date-input');
     expect(inputElement).toBeInTheDocument();
   });
 
-  test('displays error message when there is an error', () => {
+  test('displays error message when there is an error', function () {
     const errorProps = {
       ...defaultProps,
       error: { message: 'Invalid date' },
     };
 
     render(<DateInput {...errorProps} />);
-    
-    // Перевірка, чи відображається помилка
     const errorMessage = screen.getByText('Invalid date');
     expect(errorMessage).toBeInTheDocument();
   });
 
-  test('does not display error message when there is no error', () => {
+  test('does not display error message when there is no error', function () {
     render(<DateInput {...defaultProps} />);
-    
-    // Перевірка, що помилка не відображається
     const errorMessage = screen.queryByText('Invalid date');
     expect(errorMessage).toBeNull();
   });
 
-  test('calls onChange function when value changes', () => {
+  test('calls onChange function when value changes', function () {
     render(<DateInput {...defaultProps} />);
-    
-    // Знайти input за data-testid
     const inputElement = screen.getByTestId('date-input');
-    
-    // Симулюємо зміну значення
     fireEvent.change(inputElement, { target: { value: '2024-12-05' } });
-    
-    // Перевірка, чи викликається onChange
     expect(mockOnChange).toHaveBeenCalledTimes(1);
   });
 });

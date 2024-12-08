@@ -1,17 +1,16 @@
 {
-    "compilerOptions": {
-      "target": "ES6",
-      "module": "ESNext",
-      "jsx": "react-jsx",
-      "strict": true,
-      "types": ["jest"],
-      "moduleResolution": "node",
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true,
-      "lib": ["es2016", "dom"] 
-    },
-    "include": ["src"],
-    "exclude": ["node_modules"]
-  }
-  
+  "compilerOptions": {
+    "target": "ES6",                        
+    "module": "ESNext",                    
+    "jsx": "react-jsx",                     
+    "strict": true,                  
+    "types": ["jest", "node"],     
+    "moduleResolution": "node",        
+    "esModuleInterop": true,   
+    "skipLibCheck": true,            
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["es2016", "dom", "esnext"],   
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}

@@ -30,7 +30,6 @@ describe('ContactsInf component', function() {
   test('Проверка правильных стилей и заголовков', function() {
     const { container } = render(<ContactsInf />);
 
-    // Проверяем, что заголовки имеют правильный стиль
     const addressTitle = container.querySelectorAll('h3')[0];
     expect(addressTitle).toHaveClass('text-xl');
     expect(addressTitle).toHaveClass('font-roboto');

@@ -1,14 +1,14 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import CurrencyInput from './CurrencyInput';
 
-describe('CurrencyInput Component', () => {
+describe('CurrencyInput Component', function () {
   const mockProps = {
     id: 'amount',
     currencyId: 'currency',
     label: 'Amount',
-    register: jest.fn(() => ({ name: 'amount' })),
+    register: jest.fn(function () { return { name: 'amount' }; }),
     error: {
-      amount: { message: '' }, 
+      amount: { message: '' },
       currency: { message: '' },
     },
     currencies: ['USD', 'EUR', 'GBP'],
@@ -19,46 +19,34 @@ describe('CurrencyInput Component', () => {
     value: '100',
   };
 
-  test('renders the component with correct label and placeholder', () => {
+  test('renders the component with correct label and placeholder', function () {
     render(<CurrencyInput {...mockProps} />);
-
-    // Перевіряємо, чи є мітка
     expect(screen.getByText('Amount')).toBeInTheDocument();
-
-    // Перевіряємо input
     const inputElement = screen.getByPlaceholderText('Enter amount');
     expect(inputElement).toBeInTheDocument();
     expect(inputElement).toHaveValue('100');
   });
 
-  test('renders the select dropdown with correct options', () => {
+  test('renders the select dropdown with correct options', function () {
     render(<CurrencyInput {...mockProps} />);
-
-    // Перевіряємо select
     const selectElement = screen.getByDisplayValue('USD');
     expect(selectElement).toBeInTheDocument();
-
-    // Перевіряємо опції
     const options = screen.getAllByRole('option');
     expect(options).toHaveLength(mockProps.currencies.length);
-    expect(options.map((option) => option.textContent)).toEqual(mockProps.currencies);
+    expect(options.map(function (option) { return option.textContent; })).toEqual(mockProps.currencies);
   });
 
-  test('calls onChange and onChangeCurrency when inputs change', () => {
+  test('calls onChange and onChangeCurrency when inputs change', function () {
     render(<CurrencyInput {...mockProps} />);
-
-    // Зміна input
     const inputElement = screen.getByPlaceholderText('Enter amount');
     fireEvent.change(inputElement, { target: { value: '200' } });
     expect(mockProps.onChange).toHaveBeenCalledTimes(1);
-
-    // Зміна select
     const selectElement = screen.getByDisplayValue('USD');
     fireEvent.change(selectElement, { target: { value: 'EUR' } });
     expect(mockProps.onChangeCurrency).toHaveBeenCalledTimes(1);
   });
 
-  test('displays error messages correctly', () => {
+  test('displays error messages correctly', function () {
     const errorProps = {
       ...mockProps,
       error: {
@@ -67,14 +55,8 @@ describe('CurrencyInput Component', () => {
       },
     };
     render(<CurrencyInput {...errorProps} />);
-
-    // Перевіряємо помилку для input
     expect(screen.getByText('Invalid amount')).toBeInTheDocument();
-
-    // Перевіряємо, що блок для помилки відображається
     expect(screen.getByText('Invalid amount').closest('div')).toHaveClass('text-red-500');
-
-    // Перевіряємо, що помилка для select не відображається, якщо вона є в іншому елементі
     expect(screen.queryByText('Invalid currency')).not.toBeInTheDocument();
   });
 });
