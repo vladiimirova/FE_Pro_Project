@@ -47,23 +47,36 @@ export const useConverterStore = create<ConverterState>(function (set) {
 
     addToHistory: function (record) {
       set(function (state) {
-        if (
-          !state.history.some(function (r) {
-            return (
-              r.date === record.date &&
-              r.haveMoney === record.haveMoney &&
-              r.wantMoney === record.wantMoney
-            );
-          })
-        ) {
-          const updatedHistory = [...state.history, record];
-          if (updatedHistory.length > 10) updatedHistory.shift(); 
+        const updatedToValue =
+          state.exchangeRate && record.haveMoney
+            ? (parseFloat(record.haveMoney) / state.exchangeRate).toFixed(2)
+            : state.toValue;
+    
+        const isDuplicate = state.history.some(function (r) {
+          return (
+            r.date === record.date &&
+            r.haveMoney === record.haveMoney &&
+            r.wantMoney === updatedToValue
+          );
+        });
+    
+        if (!isDuplicate) {
+          const updatedHistory = [
+            ...state.history,
+            { ...record, wantMoney: updatedToValue },
+          ];
+    
+          if (updatedHistory.length > 10) updatedHistory.shift();
+    
           localStorage.setItem('conversionHistory', JSON.stringify(updatedHistory));
           return { history: updatedHistory };
         }
+    
         return state;
       });
     },
+    
+    
 
     clearHistory: function () {
       localStorage.removeItem('conversionHistory');
